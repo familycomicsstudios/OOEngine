@@ -44,6 +44,26 @@ inventory (i)
 
 go [direction]
 
+info
+
+infogen
+
+
+
+## UsernameLib version v1.0.0
+
+### UsernameLib Help
+
+Command list:
+
+@username [username]
+
+emote
+
+say [tosay]
+
+        
+
 
 
 # Acknowledgements: 
