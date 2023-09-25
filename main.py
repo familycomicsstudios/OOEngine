@@ -1,9 +1,12 @@
 import random
+import sys
+import copy
+
+import re
 
 import commands
 
 ## Constants
-__version__ = "0.1.0"
 ## End Constants
 
 
@@ -75,11 +78,7 @@ class Game:
             "get": "take",
             "i": "inventory"
         }
-
-    def help(self):
-        print()
-        print(
-            """How to Play
+        self.helpText = """# How to Play
 To play OOEngine, you can use commands to influence the world around you. Use the 
 commands north, east, south, and west to move around, with "go somewhere" to go a 
 specific place.
@@ -95,14 +94,57 @@ look [object]
 take [item]
 eat [item]
 inventory (i)
-go [direction]"""
+go [direction]
+info
+infogen"""
+        self.__version__ = "0.1.0"
+        self.MODPACK_NAME = "OOEngine"
+        self.MODS = ["OOEngine"]
+        self.MOD_VERSIONS = [self.__version__]
+        self.MOD_HELPS = [self.helpText]
+        self.BRANCH_CREATOR = "TheMadPunter"
+        self.PYTHON_VERSION = sys.version
+        self.ACKNOWLEDGEMENTS = """Willie Crowther and Don Woods for Colossal Cave.\n"""
+        self.OTHER = """"""
+        self.DEBUG = False
+
+    def help(self):
+        print()
+        print(
+            self.helpText
         )
         print()
 
+    def _info(self):
+        infoString = """"""
+        infoString += f"# {self.MODPACK_NAME} Info\n\n"
+        infoString += f"## {self.MODPACK_NAME} version {self.__version__}\n"
+        infoString += f"Python version {self.PYTHON_VERSION}\n"
+        infoString += f"Branch by {self.BRANCH_CREATOR}\n"
+        for id, infoHelp in enumerate(self.MOD_HELPS):
+            infoString += f"## {self.MODS[id]} version {self.MOD_VERSIONS[id]}\n"
+            infoString += infoHelp + "\n"
+            infoString += "\n" 
+
+        infoString += f"# Acknowledgements: \n{self.ACKNOWLEDGEMENTS}\n"
+        infoString += self.OTHER
+        infoString += f"\nDebug: {str(self.DEBUG)}"
+        infoString = re.sub('\n', '\n\n', infoString)
+        return infoString
+
+    def info(self):
+        print(self._info())
+
+    def infoFile(self):
+        with open("README.md", "w") as file:
+            file.write(self._info())
+        
+
     def parseCommand(self, command):
         cmdRaw = command
-        command = command.lower()
+        command = command
         split = command.split(" ")
+        split[0] = split[0].lower()
         if split[0] in self.aliases:
             split[0] = self.aliases[split[0]]
         if split[0] == "quit":
@@ -169,6 +211,13 @@ go [direction]"""
 
         elif split[0] == "inventory":
             self = commands.inventory(self, split)
+
+        elif split[0] == "info":
+            self.info()
+
+        elif split[0] == "infogen":
+            self.infoFile()
+            print("Generated README.md file.")
 
         elif split[0] in self.commands:
             self = self.commands[split[0]](self, split)

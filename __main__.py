@@ -36,8 +36,7 @@ game.items[0].messages["take"] = '"Thanks for picking me up!", the ball says.'
 ## End Items
 
 ## Custom Commands
-game.commands["@username"] = usernamelib.atusername
-game.commands["emote"] = usernamelib.emote
+game = usernamelib.loadMod(game)
 ## End Custom Commands
 
 ## Start Game
