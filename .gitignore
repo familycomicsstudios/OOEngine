@@ -1,0 +1,7 @@
+# Python
+__pycache__
+.pythonlibs
+poetry.lock
+.replit
+replit.nix
+tests/
