@@ -1,4 +1,7 @@
-from main import *
+try:
+    from main import *
+except:
+    from .main import *
 
 
 def atusername(self, split):

@@ -1,6 +1,10 @@
 ## Start Imports
-from main import *
-import usernamelib
+try:
+    from main import *
+    import usernamelib
+except:
+    from .main import *
+    from . import usernamelib
 
 ## End Imports
 

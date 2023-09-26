@@ -4,7 +4,10 @@ import copy
 
 import re
 
-import commands
+try:
+    import commands
+except:
+    from . import commands
 
 ## Constants
 ## End Constants
