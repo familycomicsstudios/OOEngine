@@ -1,7 +1,13 @@
 # Python
-__pycache__
-.pythonlibs
+__pycache__/
+.pythonlibs/
 poetry.lock
 .replit
 replit.nix
 tests/
+.upm/
+
+dist
+tests
+src/ooengine.egg-info
+src/ooengine/__pycache__
