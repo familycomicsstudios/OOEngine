@@ -100,7 +100,7 @@ inventory (i)
 go [direction]
 info
 infogen"""
-        self.__version__ = "0.1.0"
+        self.__version__ = "0.1.1"
         self.MODPACK_NAME = "OOEngine"
         self.MODS = ["OOEngine"]
         self.MOD_VERSIONS = [self.__version__]
