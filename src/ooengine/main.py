@@ -76,7 +76,7 @@ class Game:
             "up": "u",
             "down": "d",
             "get": "take",
-            "i": "inventory"
+            "i": "inventory",
         }
         self.helpText = """# How to Play
 To play OOEngine, you can use commands to influence the world around you. Use the 
@@ -110,9 +110,7 @@ infogen"""
 
     def help(self):
         print()
-        print(
-            self.helpText
-        )
+        print(self.helpText)
         print()
 
     def _info(self):
@@ -124,12 +122,12 @@ infogen"""
         for id, infoHelp in enumerate(self.MOD_HELPS):
             infoString += f"## {self.MODS[id]} version {self.MOD_VERSIONS[id]}\n"
             infoString += infoHelp + "\n"
-            infoString += "\n" 
+            infoString += "\n"
 
         infoString += f"# Acknowledgements: \n{self.ACKNOWLEDGEMENTS}\n"
         infoString += self.OTHER
         infoString += f"\nDebug: {str(self.DEBUG)}"
-        infoString = re.sub('\n', '\n\n', infoString)
+        infoString = re.sub("\n", "\n\n", infoString)
         return infoString
 
     def info(self):
@@ -138,12 +136,12 @@ infogen"""
     def infoFile(self):
         with open("README.md", "w") as file:
             file.write(self._info())
-        
 
     def parseCommand(self, command):
         cmdRaw = command
         command = command
         split = command.split(" ")
+        giirn = commands.getItemsInRoomNames(self, self.player.room)
         split[0] = split[0].lower()
         if split[0] in self.aliases:
             split[0] = self.aliases[split[0]]
@@ -221,6 +219,19 @@ infogen"""
 
         elif split[0] in self.commands:
             self = self.commands[split[0]](self, split)
+
+        elif len(split) > 1:
+            try:
+                if split[1] in giirn:
+                    if split[0] in self.items[giirn[split[1]]].__dict__:
+                        self = self.items[giirn[split[1]]].__dict__[split[0]](self, split)
+                        print("Done.")
+                    else:
+                        print(f"You can't {split[0]} this.")
+                else:
+                    print('Invalid command. Use "help" for help.')
+            except:
+                print(f"You can't {split[0]} this.")
 
         else:
             print('Invalid command. Use "help" for help.')

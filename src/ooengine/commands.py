@@ -99,6 +99,7 @@ def eat(split, self):
         print("You can't eat that.")
     return self
 
+
 def inventory(self, split):
     print("You have:")
     if len(self.player.inventory) == 0:

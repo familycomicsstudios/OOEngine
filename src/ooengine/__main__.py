@@ -30,9 +30,21 @@ game.rooms.append(
 
 ## Start Items
 game.items.append(
-    Item("A small ball", "There is a ball here.", ["ball"], "A small red ball lies here.")
+    Item(
+        "A small ball", "There is a ball here.", ["ball"], "A small red ball lies here."
+    )
 )
 game.items[0].messages["take"] = '"Thanks for picking me up!", the ball says.'
+
+
+def __item_smack(self, split):
+    print('"No smacking!" the ball says.')
+    return self
+
+
+game.items[0].smack = __item_smack
+# Item commands: set command name as command of item.
+# game.items[0].smack = __item_smack
 ## End Items
 
 ## Custom Commands

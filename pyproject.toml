@@ -19,6 +19,25 @@ exclude = [".cache"]
 select = ['E', 'W', 'F', 'I', 'B', 'C4', 'ARG', 'SIM']
 ignore = ['W291', 'W292', 'W293']
 
+[project]
+name = "ooengine"
+version = "0.1.0"
+authors = [
+  { name="Themadpunter", email="themadpunter@noreply.com" },
+]
+description = "A object-oriented MUD engine"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU GPL v3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/familycomicsstudios/ooengine"
+"Bug Tracker" = "https://github.com/familycomicsstudios/ooengine/issues"
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
