@@ -1,9 +1,10 @@
+"""A sample game for OOEngine."""
 ## Start Imports
 try:
-    from main import *
+    from main import Game, Room, Item
     import usernamelib
-except:
-    from .main import *
+except ImportError:
+    from .main import Game, Room, Item
     from . import usernamelib
 
 ## End Imports
@@ -42,7 +43,7 @@ game.items[0].messages["take"] = '"Thanks for picking me up!", the ball says.'
 
 
 def __item_smack(self, split):
-    print('"No smacking!" the ball says.')
+    print(f'"No {split[0]}ing!" the ball says.')
     return self
 
 
@@ -52,7 +53,7 @@ game.items[0].smack = __item_smack
 ## End Items
 
 ## Custom Commands
-game = usernamelib.loadMod(game)
+game = usernamelib.load_mod(game)
 ## End Custom Commands
 
 ## Start Game

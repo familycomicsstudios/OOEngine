@@ -66,7 +66,7 @@ say [tosay]
 
 
 
-# Acknowledgements: 
+# acknowledgements: 
 
 Willie Crowther and Don Woods for Colossal Cave.
 

@@ -1,3 +1,4 @@
+"""The main engine for OOEngine. Most other commands are called from here."""
 import random
 import sys
 import copy
@@ -6,29 +7,33 @@ import re
 
 try:
     import commands
-except:
+except ImportError:
     from . import commands
 
 ## Constants
+RANDOM = copy.copy(random.randint(1,2))
 ## End Constants
 
 
 class Room:
+    """A class for a room, with exits, a description, and a short name."""
     def __init__(self, items, description, short, exits, looks=None):
         self.items = items
         self.description = description
         self.short = short
         self.exits = exits
-        if looks == None:
+        if looks is not None:
             self.looks = {}
         else:
             self.looks = looks
 
 
 class Item:
-    def __init__(self, name, onFloor, short, long):
+    """An item, with a name, a short name, and descriptions for when it is on the floor,
+    and in the inventory."""
+    def __init__(self, name, on_floor, short, long):
         self.name = name
-        self.onFloor = onFloor
+        self.on_floor = on_floor
         self.short = short
         self.long = long
         self.messages = {
@@ -38,19 +43,23 @@ class Item:
         }
 
     def eat(self):
-        if self.messages["eat"] != None:
+        """Called when an item is eaten."""
+        if self.messages["eat"] is not None:
             print(self.messages["eat"])
 
     def take(self):
-        if self.messages["take"] != None:
+        """Called when an item is taken."""
+        if self.messages["take"] is not None:
             print(self.messages["take"])
 
     def drop(self):
-        if self.messages["drop"] != None:
+        """Called when an item is dropped."""
+        if self.messages["drop"] is not None:
             print(self.messages["drop"])
 
 
 class Player:
+    """A player for the game. Has a room, an inventory, and a name."""
     def __init__(self):
         self.room = 0
         self.inventory = []
@@ -58,12 +67,14 @@ class Player:
 
 
 class Command:
-    def __init__(self, function, help):
+    """A command for the game."""
+    def __init__(self, function, helps):
         self.function = function
-        self.help = help
+        self.helps = helps
 
 
 class Game:
+    """The object for the entire game."""
     def __init__(self):
         self.rooms = []
         self.player = Player()
@@ -81,7 +92,7 @@ class Game:
             "get": "take",
             "i": "inventory",
         }
-        self.helpText = """# How to Play
+        self.help_text = """# How to Play
 To play OOEngine, you can use commands to influence the world around you. Use the 
 commands north, east, south, and west to move around, with "go somewhere" to go a 
 specific place.
@@ -101,50 +112,55 @@ go [direction]
 info
 infogen"""
         self.__version__ = "0.1.1"
-        self.MODPACK_NAME = "OOEngine"
-        self.MODS = ["OOEngine"]
-        self.MOD_VERSIONS = [self.__version__]
-        self.MOD_HELPS = [self.helpText]
-        self.BRANCH_CREATOR = "TheMadPunter"
-        self.PYTHON_VERSION = sys.version
-        self.ACKNOWLEDGEMENTS = """Willie Crowther and Don Woods for Colossal Cave.\n"""
-        self.OTHER = """"""
-        self.DEBUG = False
+        self.modpack_name = "OOEngine"
+        self.mods = ["OOEngine"]
+        self.mod_versions = [self.__version__]
+        self.mod_helps = [self.help_text]
+        self.branch_creator = "TheMadPunter"
+        self.python_version = sys.version
+        self.acknowledgements = """Willie Crowther and Don Woods for Colossal Cave.\n"""
+        self.other = """"""
+        self.debug = False
 
-    def help(self):
+    def print_help_text(self):
+        """Print help text."""
         print()
-        print(self.helpText)
+        print(self.help_text)
         print()
 
     def _info(self):
-        infoString = """"""
-        infoString += f"# {self.MODPACK_NAME} Info\n\n"
-        infoString += f"## {self.MODPACK_NAME} version {self.__version__}\n"
-        infoString += f"Python version {self.PYTHON_VERSION}\n"
-        infoString += f"Branch by {self.BRANCH_CREATOR}\n"
-        for id, infoHelp in enumerate(self.MOD_HELPS):
-            infoString += f"## {self.MODS[id]} version {self.MOD_VERSIONS[id]}\n"
-            infoString += infoHelp + "\n"
-            infoString += "\n"
+        info_string = """"""
+        info_string += f"# {self.modpack_name} Info\n\n"
+        info_string += f"## {self.modpack_name} version {self.__version__}\n"
+        info_string += f"Python version {self.python_version}\n"
+        info_string += f"Branch by {self.branch_creator}\n"
+        for ident, info_help in enumerate(self.mod_helps):
+            info_string += f"## {self.mods[ident]} version {self.mod_versions[ident]}\n"
+            info_string += info_help + "\n"
+            info_string += "\n"
 
-        infoString += f"# Acknowledgements: \n{self.ACKNOWLEDGEMENTS}\n"
-        infoString += self.OTHER
-        infoString += f"\nDebug: {str(self.DEBUG)}"
-        infoString = re.sub("\n", "\n\n", infoString)
-        return infoString
+        info_string += f"# acknowledgements: \n{self.acknowledgements}\n"
+        info_string += self.other
+        info_string += f"\nDebug: {str(self.debug)}"
+        info_string = re.sub("\n", "\n\n", info_string)
+        return info_string
 
     def info(self):
+        """Print info."""
         print(self._info())
 
-    def infoFile(self):
-        with open("README.md", "w") as file:
+    def info_file(self):
+        """Generate a readme file for the modpack."""
+        with open("README.md", "w", encoding="utf-8") as file:
             file.write(self._info())
 
-    def parseCommand(self, command):
-        cmdRaw = command
-        command = command
+    def parse_command(self, command):
+        """Parse a command from the command variable."""
+        cmd_raw = command
+        if cmd_raw is None:
+            raise NameError
         split = command.split(" ")
-        giirn = commands.getItemsInRoomNames(self, self.player.room)
+        giirn = commands.get_items_in_room_names(self, self.player.room)
         split[0] = split[0].lower()
         if split[0] in self.aliases:
             split[0] = self.aliases[split[0]]
@@ -152,7 +168,7 @@ infogen"""
             self.alive = False
 
         elif split[0] == "help":
-            self.help()
+            self.print_help_text()
 
         elif split[0] == "n" or split[0] == "north":
             if "n" in self.rooms[self.player.room].exits:
@@ -217,7 +233,7 @@ infogen"""
             self.info()
 
         elif split[0] == "infogen":
-            self.infoFile()
+            self.info_file()
             print("Generated README.md file.")
 
         elif split[0] in self.commands:
@@ -233,21 +249,22 @@ infogen"""
                         print(f"You can't {split[0]} this.")
                 else:
                     print('Invalid command. Use "help" for help.')
-            except:
+            except IndexError:
                 print(f"You can't {split[0]} this.")
 
         else:
             print('Invalid command. Use "help" for help.')
 
     def start(self):
+        """Start the game."""
         print(self.intro)
-        lastRoom = -1
+        last_room = -1
         while self.alive:
-            if self.player.room != lastRoom:
+            if self.player.room != last_room:
                 commands.look(["look"], self)
-                lastRoom = self.player.room
+                last_room = self.player.room
             command = input(self.prompt)
-            self.parseCommand(command)
+            self.parse_command(command)
         print(self.ending)
 
 
