@@ -1,3 +1,5 @@
+# Sample Game
+```python
 """A sample game for OOEngine."""
 ## Start Imports
 try:
@@ -98,3 +100,5 @@ game = usernamelib.load_mod(game)
 ## Start Game
 game.start()
 # pylint: disable=C0103
+
+```
