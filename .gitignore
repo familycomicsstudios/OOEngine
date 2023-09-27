@@ -11,3 +11,5 @@ dist
 tests
 src/ooengine.egg-info
 src/ooengine/__pycache__
+
+save.sav

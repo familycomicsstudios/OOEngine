@@ -2,6 +2,7 @@
 import random
 import sys
 import copy
+import pickle
 
 import re
 
@@ -246,6 +247,13 @@ infogen"""
         elif split[0] == "infogen":
             self.info_file()
             print("Generated README.md file.")
+
+        # elif split[0] == "save":
+        #     try:
+        #         with open(split[1], "wb") as loadfile:
+        #             self = pickle.dump(self, loadfile, pickle.HIGHEST_PROTOCOL)
+        #     except (FileNotFoundError):
+        #         print("Oops! Can't load.")
 
         elif split[0] in self.commands:
             self = self.commands[split[0]](self, split)

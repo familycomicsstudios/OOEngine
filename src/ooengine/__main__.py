@@ -3,9 +3,13 @@
 try:
     from main import Game, Room, Item
     import usernamelib
+    import sys
+    import pickle
 except ImportError:
     from .main import Game, Room, Item
     from . import usernamelib
+    import sys
+    import pickle
 
 ## End Imports
 
@@ -86,6 +90,14 @@ game.items[0].smack = __item_smack
 ## Custom Commands
 game = usernamelib.load_mod(game)
 ## End Custom Commands
+
+# try:
+#     with open(sys.argv[1], "rb") as loadfile:
+#         self = pickle.load(loadfile)
+# except (FileNotFoundError):
+#     print("Oops! Can't load.")
+# except (IndexError):
+#     pass
 
 ## Start Game
 game.start()
