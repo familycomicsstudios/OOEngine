@@ -97,6 +97,7 @@ class Game:
             "down": "d",
             "get": "take",
             "i": "inventory",
+            "g": "take"
         }
         self.help_text = """# How to Play
 To play OOEngine, you can use commands to influence the world around you. Use the 
