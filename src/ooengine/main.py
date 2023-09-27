@@ -11,12 +11,13 @@ except ImportError:
     from . import commands
 
 ## Constants
-RANDOM = copy.copy(random.randint(1,2))
+RANDOM = copy.copy(random.randint(1, 2))
 ## End Constants
 
 
 class Room:
     """A class for a room, with exits, a description, and a short name."""
+
     def __init__(self, items, description, short, exits, looks=None):
         self.items = items
         self.description = description
@@ -31,6 +32,7 @@ class Room:
 class Item:
     """An item, with a name, a short name, and descriptions for when it is on the floor,
     and in the inventory."""
+
     def __init__(self, name, on_floor, short, long):
         self.name = name
         self.on_floor = on_floor
@@ -60,6 +62,7 @@ class Item:
 
 class Player:
     """A player for the game. Has a room, an inventory, and a name."""
+
     def __init__(self):
         self.room = 0
         self.inventory = []
@@ -68,6 +71,7 @@ class Player:
 
 class Command:
     """A command for the game."""
+
     def __init__(self, function, helps):
         self.function = function
         self.helps = helps
@@ -75,6 +79,7 @@ class Command:
 
 class Game:
     """The object for the entire game."""
+
     def __init__(self):
         self.rooms = []
         self.player = Player()
@@ -243,7 +248,9 @@ infogen"""
             try:
                 if split[1] in giirn:
                     if split[0] in self.items[giirn[split[1]]].__dict__:
-                        self = self.items[giirn[split[1]]].__dict__[split[0]](self, split)
+                        self = self.items[giirn[split[1]]].__dict__[split[0]](
+                            self, split
+                        )
                         print("Done.")
                     else:
                         print(f"You can't {split[0]} this.")

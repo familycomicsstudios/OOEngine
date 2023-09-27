@@ -31,6 +31,7 @@ game.rooms.append(
         {"s": 0},
     )
 )
+
 ## End Rooms
 
 ## Start Items

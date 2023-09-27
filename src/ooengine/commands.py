@@ -1,7 +1,8 @@
 """Basic commands for OOEngine."""
+
+
 class NoBallsError(Exception):
     """A sample error for no balls (used for checking if there is a ball in the room)."""
-
 
 
 def get_items_in_room(self, room):

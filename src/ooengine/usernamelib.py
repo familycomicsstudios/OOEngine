@@ -6,6 +6,7 @@ except ImportError:
 
 RANDOM = RANDOM + 1
 
+
 def atusername(self, split):
     """@username: Set username of player."""
     if len(split) != 2:
