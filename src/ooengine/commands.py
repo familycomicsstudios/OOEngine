@@ -126,7 +126,9 @@ def unlock(self, split):
             if current_room.locked is not {}:
                 if current_room.key in self.player.inventory:
                     self.rooms[self.player.room].exits.update(current_room.locked)
-                    self.rooms[self.player.room].description = current_room.unlocked_desc
+                    self.rooms[
+                        self.player.room
+                    ].description = current_room.unlocked_desc
                     print("You unlocked the door!")
                 else:
                     print("You don't have the key!")

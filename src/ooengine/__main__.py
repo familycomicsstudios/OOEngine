@@ -26,7 +26,7 @@ game.rooms.append(
 game.rooms.append(
     Room(
         [],
-        "You are in another empty room. There is a door to the south and a " \
+        "You are in another empty room. There is a door to the south and a "
         "locked door to the north.",
         "Empty Room 2",
         {"s": 0},
@@ -35,8 +35,10 @@ game.rooms.append(
 
 game.rooms[1].key = 1
 game.rooms[1].locked = {"n": 2}
-game.rooms[1].unlocked_desc = "You are in another empty room. " \
-"There is a door to the south and a unlocked door to the north."
+game.rooms[1].unlocked_desc = (
+    "You are in another empty room. "
+    "There is a door to the south and a unlocked door to the north."
+)
 
 
 game.rooms.append(
