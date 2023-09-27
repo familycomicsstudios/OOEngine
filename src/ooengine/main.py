@@ -23,6 +23,8 @@ class Room:
         self.description = description
         self.short = short
         self.exits = exits
+        self.locked = {}
+        self.key = -1
         if looks is not None:
             self.looks = {}
         else:
@@ -39,7 +41,6 @@ class Item:
         self.short = short
         self.long = long
         self.messages = {
-            "eat": "The ball is delicious.",
             "take": "You take the item.",
             "drop": "You drop the item.",
         }
@@ -88,7 +89,7 @@ class Game:
         self.commands = {}
         self.items = []
         self.intro = "Welcome to OOEngine!"
-        self.ending = "Game ended."
+        self.ending = "\nGame ended."
         self.aliases = {
             "l": "look",
             "grab": "take",
@@ -234,6 +235,9 @@ infogen"""
         elif split[0] == "inventory":
             self = commands.inventory(self, split)
 
+        elif split[0] == "unlock":
+            self = commands.unlock(self, split)
+
         elif split[0] == "info":
             self.info()
 
@@ -264,14 +268,17 @@ infogen"""
 
     def start(self):
         """Start the game."""
-        print(self.intro)
-        last_room = -1
-        while self.alive:
-            if self.player.room != last_room:
-                commands.look(["look"], self)
-                last_room = self.player.room
-            command = input(self.prompt)
-            self.parse_command(command)
+        try:
+            print(self.intro)
+            last_room = -1
+            while self.alive:
+                if self.player.room != last_room:
+                    commands.look(["look"], self)
+                    last_room = self.player.room
+                command = input(self.prompt)
+                self.parse_command(command)
+        except KeyboardInterrupt:
+            self.parse_command("quit")
         print(self.ending)
 
 

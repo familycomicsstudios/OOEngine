@@ -7,29 +7,38 @@ class NoBallsError(Exception):
 
 def get_items_in_room(self, room):
     """Get all items in the room given as a array of objects."""
-    items = self.rooms[room].items
-    new_items = []
-    for item in items:
-        new_items.append(self.items[item].__dict__)
-    return new_items
+    try:
+        items = self.rooms[room].items
+        new_items = []
+        for item in items:
+            new_items.append(self.items[item].__dict__)
+        return new_items
+    except IndexError:
+        return []
 
 
 def get_items_in_room_names(self, room):
     """Get the short names of all items in a room."""
-    items = self.rooms[room].items
-    new_items = {}
-    for item in items:
-        new_items[self.items[item].short[0]] = item
-    return new_items
+    try:
+        items = self.rooms[room].items
+        new_items = {}
+        for item in items:
+            new_items[self.items[item].short[0]] = item
+        return new_items
+    except IndexError:
+        return []
 
 
 def get_items_in_inventory_names(self, room):
     """Get the short names of all items in the inventory."""
     items = room
-    new_items = {}
-    for item in items:
-        new_items[self.items[item].short[0]] = item
-    return new_items
+    try:
+        new_items = {}
+        for item in items:
+            new_items[self.items[item].short[0]] = item
+        return new_items
+    except IndexError:
+        return []
 
 
 def look(split, self):
@@ -59,7 +68,7 @@ def grab(split, self):
             if split[1] in giirn:
                 self.player.inventory.append(giirn[split[1]])
                 self.rooms[self.player.room].items.remove(giirn[split[1]])
-                self.items[self.player.inventory[giirn[split[1]]]].take()
+                self.items[self.player.inventory[-1]].take()
                 print("Okay.")
             else:
                 print("You can't take that.")
@@ -78,7 +87,7 @@ def drop(split, self):
             if split[1] in giirn:
                 self.player.inventory.remove(giirn[split[1]])
                 self.rooms[self.player.room].items.append(giirn[split[1]])
-                self.items[self.rooms[self.player.room].items[giirn[split[1]]]].drop()
+                self.items[self.rooms[self.player.room].items[-1]].drop()
                 print("Okay.")
             else:
                 print("You can't drop that.")
@@ -94,19 +103,39 @@ def eat(split, self):
     try:
         if len(split) == 2:
             giirn = get_items_in_inventory_names(self, self.player.inventory)
-            if (
-                split[1] in giirn
-                and self.items[giirn[split[1]]].messages["eat"] is not None
+            if split[1] in giirn and (
+                self.items[giirn[split[1]]].messages["eat"] is not None
             ):
-                self.items[self.player.inventory[giirn[split[1]]]].eat()
+                self.items[self.player.inventory[-1]].eat()
                 self.player.inventory.remove(giirn[split[1]])
                 print("Okay.")
             else:
                 print("You can't eat that.")
         else:
             print("Usage: eat [item]")
-    except IndexError:
+    except (IndexError, KeyError):
         print("You can't eat that.")
+    return self
+
+
+def unlock(self, split):
+    """Unlock a door in a room. Called from main.py."""
+    try:
+        current_room = self.rooms[self.player.room]
+        if len(split) == 1:
+            if current_room.locked is not {}:
+                if current_room.key in self.player.inventory:
+                    self.rooms[self.player.room].exits.update(current_room.locked)
+                    self.rooms[self.player.room].description = current_room.unlocked_desc
+                    print("You unlocked the door!")
+                else:
+                    print("You don't have the key!")
+            else:
+                print("What am I supposed to be unlocking here?")
+        else:
+            print("Usage: unlock")
+    except IndexError:
+        print("You can't unlock that.")
     return self
 
 
