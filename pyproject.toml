@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-template"
-version = "0.1.1"
+version = "0.2.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 
@@ -21,7 +21,7 @@ ignore = ['W291', 'W292', 'W293']
 
 [project]
 name = "ooengine"
-version = "0.1.1"
+version = "0.2.0"
 authors = [
   { name="Themadpunter", email="themadpunter@noreply.com" },
 ]
