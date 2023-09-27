@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-template"
-version = "0.2.0"
+version = "0.2.1"
 description = ""
 authors = ["Your Name <you@example.com>"]
 
@@ -21,7 +21,7 @@ ignore = ['W291', 'W292', 'W293']
 
 [project]
 name = "ooengine"
-version = "0.2.0"
+version = "0.2.1"
 authors = [
   { name="Themadpunter", email="themadpunter@noreply.com" },
 ]
@@ -31,6 +31,7 @@ requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
 ]
 
 [project.urls]
