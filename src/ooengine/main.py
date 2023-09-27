@@ -25,7 +25,7 @@ class Room:
         self.exits = exits
         self.locked = {}
         self.key = -1
-        if looks is not None:
+        if looks is None:
             self.looks = {}
         else:
             self.looks = looks
@@ -97,7 +97,8 @@ class Game:
             "down": "d",
             "get": "take",
             "i": "inventory",
-            "g": "take"
+            "g": "take",
+            "talk": "look"
         }
         self.help_text = """# How to Play
 To play OOEngine, you can use commands to influence the world around you. Use the 

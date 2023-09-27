@@ -44,9 +44,13 @@ game.rooms[1].unlocked_desc = (
 game.rooms.append(
     Room(
         [],
-        "You are in third empty room. There is a door to the south.",
+        "You are in third empty room. There is a door to the south. A NPC is here named Bob.",
         "Empty Room 3",
         {"s": 1},
+        looks = {
+            "bob": "Bob: Hello, fellow adventurer! Want to talk politics? (talk bob politics)",
+            "bob politics": "Bob: Stop talking about politics!"
+        }
     )
 )
 

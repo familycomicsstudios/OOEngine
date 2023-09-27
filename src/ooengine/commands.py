@@ -48,15 +48,16 @@ def look(split, self):
             print(self.rooms[self.player.room].description)
             for item in self.rooms[self.player.room].items:
                 print(self.items[item].on_floor)
-        elif len(split) == 2:
+        elif len(split) > 1:
             giirn = get_items_in_room_names(self, self.player.room)
+            split[1] = ' '.join(split[1:])
             if split[1] in giirn:
                 print(self.items[giirn[split[1]]].long)
             else:
                 print(self.rooms[self.player.room].looks[split[1]])
         else:
             print("Usage: look [where]")
-    except IndexError:
+    except (IndexError, KeyError):
         print("You can't look at that.")
 
 
